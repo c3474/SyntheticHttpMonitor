@@ -1,0 +1,29 @@
+{
+  "SyntheticMonitor": {
+    "Defaults": {
+      "IntervalSeconds": 60,
+      "TimeoutSeconds": 10,
+      "ExpectedStatusCodes": [ 200 ],
+      "MaxBodyBytes": 262144,
+      "DangerousAcceptAnyServerCertificate": false
+    },
+    "Targets": [
+      {
+        "Name": "Orion Login",
+        "Url": "https://orion.example.com/Orion/Login.aspx",
+        "IntervalSeconds": 120,
+        "TimeoutSeconds": 15,
+        "ExpectedStatusCodes": [ 200 ],
+        "BodyRegex": "SolarWinds",
+        "MaxBodyBytes": 262144,
+        "DangerousAcceptAnyServerCertificate": false
+      },
+      {
+        "Name": "Status page",
+        "Url": "https://status.example.com/",
+        "ExpectedStatusCodes": [ 200, 204 ],
+        "BodyRegex": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+Synthetic HTTP Monitor — start here (after you unzip)
+======================================================
+
+If your zip has only readme.md and SyntheticHttpMonitor.Installer.exe at the top level, you are in the right place.
+This file (and the binaries) usually live under the Resources folder next to them.
+
+1. Install
+   • Right-click SyntheticHttpMonitor.Installer.exe (next to readme.md) → Run as administrator, then Install or Upgrade.
+
+2. Configure
+   • Run Resources\SyntheticHttpMonitor.Config.exe under the install folder (or File → Open installed copy). Save changes when done.
+   • If the service is under Program Files, Config may need Run as administrator to save appsettings.json (under Resources next to the service EXE).
+
+3. Restart
+   • Restart the "Synthetic HTTP Monitor" Windows service after you change settings.
+
+Uninstall: Settings → Apps → Installed apps, or run SyntheticHttpMonitor.Installer.exe /uninstall from an elevated prompt.
+
+Full documentation: readme.md at the zip root, or README.md under Resources.

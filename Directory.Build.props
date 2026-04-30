@@ -1,0 +1,20 @@
+<Project>
+  <!--
+    Product line (change for a major/minor product release). Build stamp is encoded in parts 3 & 4 of FileVersion.
+    Part 3: (Year - 2020) * 400 + DayOfYear  (decode: year = 2020 + part3/400, day-of-year = part3 % 400)
+    Part 4: local minutes since midnight (0–1439); must fit UInt16 for Win32 version. Builds in different clock minutes differ; 10–15 minutes apart always differ.
+    Uses the build machine's local clock at compile/publish time (not UTC).
+  -->
+  <PropertyGroup>
+    <!-- Keep ProductVersion / "about" strings as the four-part numeric stamp only (no +git suffix). -->
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <SyntheticProductMajor>1</SyntheticProductMajor>
+    <SyntheticProductMinor>0</SyntheticProductMinor>
+    <SyntheticBuildPart3>$([MSBuild]::Add($([MSBuild]::Multiply($([MSBuild]::Subtract($([System.DateTime]::Now.get_Year()), 2020)), 400)), $([System.DateTime]::Now.get_DayOfYear())))</SyntheticBuildPart3>
+    <SyntheticBuildPart4>$([MSBuild]::Add($([MSBuild]::Multiply($([System.DateTime]::Now.get_Hour()), 60)), $([System.DateTime]::Now.get_Minute())))</SyntheticBuildPart4>
+    <FileVersion>$(SyntheticProductMajor).$(SyntheticProductMinor).$(SyntheticBuildPart3).$(SyntheticBuildPart4)</FileVersion>
+    <AssemblyVersion>$(FileVersion)</AssemblyVersion>
+    <Version>$(FileVersion)</Version>
+    <InformationalVersion>$(FileVersion)</InformationalVersion>
+  </PropertyGroup>
+</Project>

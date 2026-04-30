@@ -1,0 +1,36 @@
+{
+  "Alerting": {
+    "FailureThreshold": 2,
+    "RepeatWhileDownMinutes": 60,
+    "SendRecoveryEmail": true
+  },
+  "Smtp": {
+    "Enabled": true,
+    "Host": "smtp-relay.internal.example.com",
+    "Port": 25,
+    "UseSsl": false,
+    "UseStartTls": true,
+    "Username": "",
+    "Password": "",
+    "From": "synthetic-monitor@internal.example.com",
+    "To": [ "ops-alerts@internal.example.com" ],
+    "Cc": [],
+    "SubjectDownPrefix": "[DOWN]",
+    "SubjectRecoveryPrefix": "[RECOVERED]"
+  },
+  "PagerDuty": {
+    "Enabled": false,
+    "RoutingKey": "",
+    "EventsApiUrl": "https://events.pagerduty.com/v2/enqueue",
+    "Severity": "critical",
+    "Source": "",
+    "ResolveOnRecovery": true
+  },
+  "TicketingApi": {
+    "Enabled": false,
+    "BaseUrl": "https://ticketing.internal.example.com/api/",
+    "ApiKeyHeaderName": "X-API-Key",
+    "ApiKey": "",
+    "ProjectKey": "NETOPS"
+  }
+}

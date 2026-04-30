@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>SyntheticHttpMonitor.ConfigEditor</RootNamespace>
+    <AssemblyName>SyntheticHttpMonitor.Config</AssemblyName>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Description>GUI editor for Synthetic HTTP Monitor appsettings.json.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SyntheticHttpMonitor.Configuration\SyntheticHttpMonitor.Configuration.csproj" />
+    <PackageReference Include="System.Management" Version="8.0.0" />
+    <PackageReference Include="System.ServiceProcess.ServiceController" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>

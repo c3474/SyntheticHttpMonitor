@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <!-- Other projects live under this folder; exclude them from the Worker default compile glob. -->
+    <DefaultItemExcludes>$(DefaultItemExcludes);SyntheticHttpMonitor.Configuration\**;SyntheticHttpMonitor.ConfigEditor\**;SyntheticHttpMonitor.Setup\**</DefaultItemExcludes>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>SyntheticHttpMonitor</RootNamespace>
+    <AssemblyName>SyntheticHttpMonitor</AssemblyName>
+    <Description>Synthetic HTTP/HTTPS monitoring Windows service with SMTP alerts.</Description>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <!-- File / assembly / informational version: see Directory.Build.props (date-time encoded). -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.Example.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="targets.Example.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="logging.Example.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="notifications.Example.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="SyntheticHttpMonitor.Configuration\SyntheticHttpMonitor.Configuration.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 4.16.0+ fixes GHSA-9j88-vvj5-vhgr (STARTTLS / SASL downgrade); see roadmap checklist. -->
+    <PackageReference Include="MailKit" Version="4.16.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.0.1" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.4" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+    <PackageReference Include="Serilog.Sinks.EventLog" Version="4.0.0" />
+  </ItemGroup>
+
+</Project>

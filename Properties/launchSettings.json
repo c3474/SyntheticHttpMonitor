@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SyntheticHttpMonitor": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
