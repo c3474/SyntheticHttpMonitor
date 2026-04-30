@@ -3,7 +3,7 @@
   <PropertyGroup>
     <!-- Other projects live under this folder; exclude them from the Worker default compile glob. -->
     <DefaultItemExcludes>$(DefaultItemExcludes);SyntheticHttpMonitor.Configuration\**;SyntheticHttpMonitor.ConfigEditor\**;SyntheticHttpMonitor.Setup\**</DefaultItemExcludes>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>SyntheticHttpMonitor</RootNamespace>
@@ -35,8 +35,8 @@
   <ItemGroup>
     <!-- 4.16.0+ fixes GHSA-9j88-vvj5-vhgr (STARTTLS / SASL downgrade); see roadmap checklist. -->
     <PackageReference Include="MailKit" Version="4.16.0" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="10.0.0" />
     <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.4" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
