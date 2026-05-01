@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 # Windows PowerShell 5.1 compatible. -Zip requires Microsoft.PowerShell.Archive (built into Win 10 / Server 2016+).
 <#
 .SYNOPSIS
