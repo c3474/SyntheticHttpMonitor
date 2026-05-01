@@ -11,7 +11,7 @@ Check these off in this file when done (single source of truth for “nailed it�
 | Done | Item | Impact | Notes |
 |:----:|------|--------|--------|
 | [x] | **MailKit / dependency hygiene** | Clears **NU1902** / [GHSA-9j88-vvj5-vhgr](https://github.com/advisories/GHSA-9j88-vvj5-vhgr) (moderate: STARTTLS response handling / SASL downgrade risk). | Worker `SyntheticHttpMonitor.csproj` uses **MailKit ≥ 4.16.0**. Verify locally: `dotnet list SyntheticHttpMonitor.sln package --vulnerable --include-transitive`. |
-| [x] | **CI for `SyntheticHttpMonitor.sln`** | Every push/PR under `tools/SyntheticHttpMonitor/` gets a **Release** build on **windows-latest** (required for `net8.0-windows`). | **GitHub:** **`.github/workflows/synthetic-http-monitor.yml`** (also runs `dotnet list … --vulnerable`). If the repo only uses **Azure DevOps**, add an equivalent Windows job or uncheck until that exists. Optional later: publish artifact zip (same layout as `Publish-Monitor.ps1`). |
+| [x] | **CI for `SyntheticHttpMonitor.sln`** | Every push/PR gets a **Release** build on **windows-latest** (required for `net10.0-windows`). | **GitHub:** **`.github/workflows/build.yml`** (also runs `dotnet list … --vulnerable`). Optional later: publish artifact zip (same layout as `Publish-Monitor.ps1`). |
 
 ---
 
@@ -109,6 +109,23 @@ Today the monitor performs **anonymous GET** requests. Adding **authentication**
 | Named credential profiles + secret store integration + UI | Medium–large |
 | mTLS + multiple handlers | Medium (per-target handler or client factory design) |
 | Full “enterprise” vault + rotation + audit | Large (multi-sprint), usually pairs with platform standards |
+
+---
+
+## TLS certificate monitoring
+
+Today the monitor performs HTTP-level checks only. Adding **TLS certificate monitoring** would cover connectivity and cert health for Cloudflare-protected sites (where HTTP probes get blocked) and provide cert expiry alerting for any HTTPS endpoint.
+
+**Design note:** cert expiry and uptime monitoring have fundamentally different polling cadences — weekly is fine for cert checks, whereas uptime needs seconds-to-minutes. `IntervalSeconds` is already per-target so the scheduler handles this without changes. The meaningful difference is alerting semantics: cert expiry is a countdown (warn at 30 days, critical at 7 days) rather than binary down/recovered. That logic belongs in a dedicated probe class and a new config section, keeping the existing uptime path clean.
+
+| Scope | Notes |
+|-------|-------|
+| **TCP connect check** | `TcpClient.ConnectAsync(host, 443)` with timeout — proves network reachability regardless of Cloudflare HTTP blocking. Small effort. |
+| **TLS handshake + cert read** | `SslStream` over the TCP connection; read `RemoteCertificate` as `X509Certificate2`. Returns subject, issuer, SANs, `NotAfter`. Works through Cloudflare (TLS handshake precedes HTTP). Medium effort. |
+| **Cert expiry alerting** | New `CertificateExpiryDaysWarning` / `CertificateExpiryDaysCritical` thresholds per target; escalating severity through existing SMTP + PagerDuty channels. Medium effort on top of TLS read. |
+| **New target type** | `"Type": "CertificateExpiry"` (or optional flag on existing targets) — skips HTTP probe entirely, runs TCP+TLS check only. |
+
+**Planned after** HTTP monitor is rounded out (OAuth email, custom headers, etc.).
 
 ---
 
