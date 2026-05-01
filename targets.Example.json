@@ -5,7 +5,11 @@
       "TimeoutSeconds": 10,
       "ExpectedStatusCodes": [ 200 ],
       "MaxBodyBytes": 262144,
-      "DangerousAcceptAnyServerCertificate": false
+      "DangerousAcceptAnyServerCertificate": false,
+      "HttpMethod": "GET",
+      "Headers": {
+        "User-Agent": "SyntheticHttpMonitor/1.0"
+      }
     },
     "Targets": [
       {
@@ -23,6 +27,20 @@
         "Url": "https://status.example.com/",
         "ExpectedStatusCodes": [ 200, 204 ],
         "BodyRegex": null
+      },
+      {
+        "Name": "API health (HEAD)",
+        "Url": "https://api.example.com/health",
+        "HttpMethod": "HEAD",
+        "ExpectedStatusCodes": [ 200, 204 ]
+      },
+      {
+        "Name": "Internal API (bearer token)",
+        "Url": "https://internal.example.com/api/status",
+        "Headers": {
+          "Authorization": "Bearer YOUR_TOKEN_HERE",
+          "Accept": "application/json"
+        }
       }
     ]
   }

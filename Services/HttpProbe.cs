@@ -38,7 +38,11 @@ public sealed class HttpProbe
 
         try
         {
-            using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+            using var request = new HttpRequestMessage(new HttpMethod(target.HttpMethod), uri);
+            if (target.Headers is not null)
+                foreach (var (name, value) in target.Headers)
+                    request.Headers.TryAddWithoutValidation(name, value);
+
             using var response = await client.SendAsync(
                 request,
                 HttpCompletionOption.ResponseHeadersRead,

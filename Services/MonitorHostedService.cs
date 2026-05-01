@@ -146,6 +146,11 @@ public sealed class MonitorHostedService : BackgroundService
                 throw new InvalidOperationException($"Target '{resolved.Name}' IntervalSeconds must be at least 5.");
             }
 
+            if (string.IsNullOrWhiteSpace(resolved.HttpMethod))
+            {
+                throw new InvalidOperationException($"Target '{resolved.Name}' HttpMethod must not be empty.");
+            }
+
             if (resolved.BodyRegex is not null)
             {
                 _ = new Regex(resolved.BodyRegex, RegexOptions.None, TimeSpan.FromSeconds(2));
