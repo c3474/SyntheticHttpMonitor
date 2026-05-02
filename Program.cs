@@ -58,8 +58,10 @@ builder.Services.AddHttpClient(HttpProbe.HttpClientNameInsecure)
     .ConfigurePrimaryHttpMessageHandler(static _ => CreateProbeHandler(skipCertificateValidation: true));
 
 builder.Services.AddHttpClient(nameof(PagerDutyEventsService));
+builder.Services.AddHttpClient(OAuthTokenService.HttpClientName);
 
 builder.Services.AddSingleton<HttpProbe>();
+builder.Services.AddSingleton<OAuthTokenService>();
 builder.Services.AddSingleton<SmtpNotificationService>();
 builder.Services.AddSingleton<PagerDutyEventsService>();
 builder.Services.AddHostedService<MonitorHostedService>();
