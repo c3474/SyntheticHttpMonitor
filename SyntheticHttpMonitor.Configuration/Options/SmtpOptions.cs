@@ -9,7 +9,10 @@ public enum SmtpAuthMode
     GmailOAuth2,
 
     /// <summary>OAuth2 refresh-token flow via Microsoft's token endpoint (Exchange Online / Microsoft 365).</summary>
-    ExchangeOAuth2
+    ExchangeOAuth2,
+
+    /// <summary>OAuth2 refresh-token flow via Microsoft's consumer token endpoint (Outlook.com / Hotmail personal accounts).</summary>
+    OutlookOAuth2
 }
 
 public sealed class SmtpOptions

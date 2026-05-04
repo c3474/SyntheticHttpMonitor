@@ -35,6 +35,7 @@ public sealed class OAuthTokenService
             {
                 SmtpAuthMode.GmailOAuth2 => BuildGmailRequest(options),
                 SmtpAuthMode.ExchangeOAuth2 => BuildExchangeRequest(options),
+                SmtpAuthMode.OutlookOAuth2 => BuildOutlookRequest(options),
                 _ => throw new InvalidOperationException($"AuthMode {options.AuthMode} is not an OAuth2 mode.")
             };
 
@@ -77,6 +78,18 @@ public sealed class OAuthTokenService
 
     private static (string tokenUrl, FormUrlEncodedContent content) BuildExchangeRequest(SmtpOptions o) =>
         ($"https://login.microsoftonline.com/{o.TenantId}/oauth2/v2.0/token",
+         new FormUrlEncodedContent(new Dictionary<string, string>
+         {
+             ["client_id"] = o.ClientId,
+             ["client_secret"] = o.ClientSecret,
+             ["refresh_token"] = o.RefreshToken,
+             ["grant_type"] = "refresh_token",
+             ["scope"] = "https://outlook.office365.com/SMTP.Send offline_access"
+         }));
+
+    // Outlook.com personal accounts use the shared "consumers" tenant — no TenantId needed.
+    private static (string tokenUrl, FormUrlEncodedContent content) BuildOutlookRequest(SmtpOptions o) =>
+        ("https://login.microsoftonline.com/consumers/oauth2/v2.0/token",
          new FormUrlEncodedContent(new Dictionary<string, string>
          {
              ["client_id"] = o.ClientId,
